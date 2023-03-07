@@ -9,7 +9,7 @@ class data
 {
 private:
     /* data */
-    std::vector<uint8_t> feature_vector; // No class at end.
+    std::vector<uint8_t> * feature_vector; // No class at end.
     uint8_t label; 
     int enum_label; // A 1, B →→ 2
 public:
