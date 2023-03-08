@@ -7,4 +7,4 @@ include_directories(include)
 
 file(GLOB SOURCES "src/*.cpp")
 
-add_executable(ML_in_cpp ${SOURCES})
+add_executable(ML_in_cpp main.cpp ${SOURCES})

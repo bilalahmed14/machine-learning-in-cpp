@@ -134,3 +134,23 @@ void data_handler::count_classes(){
     num_classes = count;
     printf("Successfully Extracted %d unique Classes. \n", num_classes);
 }
+
+uint32_t data_handler::convert_to_little_endian(const unsigned char* bytes){
+    
+    return (uint32_t)   ((bytes[0] << 24) |
+                        (bytes[1] << 16) |
+                        (bytes[2] << 8) |
+                        (bytes[3]));
+}
+
+
+
+std::vector<data *> * data_handler::get_traning_data(){
+    return traning_data;
+}
+std::vector<data *> * data_handler::get_test_data(){
+    return test_data;
+}
+std::vector<data *> * data_handler::get_validation_data(){
+    return validation_data;
+}
