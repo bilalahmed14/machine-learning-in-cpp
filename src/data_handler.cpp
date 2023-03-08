@@ -71,3 +71,66 @@ void data_handler::read_feature_labels(std::string path){
         exit(1);
     }
 }
+
+void data_handler::split_data(){
+    std::unordered_set<int> used_indexes;
+    int train_size = data_array->size() * TRAIN_SET_PERCENT;
+    int test_size = data_array->size() * TEST_SET_PERCENT;
+    int vlaidation_size = data_array->size() * VALIDATION_PERCENT;
+
+    // traning data
+
+    int count = 0;
+    while (count < train_size)
+    {
+        int rand_index = rand() % data_array->size();
+        if (used_indexes.find(rand_index) == used_indexes.end()){
+            traning_data->push_back(data_array->at(rand_index));
+            used_indexes.insert(rand_index);
+            count++;
+        }
+    }
+
+    // Test Data
+
+    count = 0;
+    while (count < test_size)
+    {
+        int rand_index = rand() % data_array->size();
+        if (used_indexes.find(rand_index) == used_indexes.end()){
+            test_data->push_back(data_array->at(rand_index));
+            used_indexes.insert(rand_index);
+            count++;
+        }
+    }
+
+     // Validation Data
+
+    count = 0;
+    while (count < vlaidation_size)
+    {
+        int rand_index = rand() % data_array->size();
+        if (used_indexes.find(rand_index) == used_indexes.end()){
+            validation_data->push_back(data_array->at(rand_index));
+            used_indexes.insert(rand_index);
+            count++;
+        }
+    }
+    
+    printf("Traning data Size: %lu.\n", traning_data->size());
+    printf("Test data Size: %lu.\n", test_data->size());
+    printf("Validation data Size: %lu.\n", validation_data->size());
+}
+
+void data_handler::count_classes(){
+    int count = 0;
+    for (unsigned i=0; i< data_array->size(); i++){
+        if (class_map.find(data_array->at(i)->get_label()) == class_map.end()){
+            class_map[data_array->at(i)->get_label()] = count;
+            data_array->at(i)->set_enumerated_label(count);
+            count++;
+        }
+    }
+    num_classes = count;
+    printf("Successfully Extracted %d unique Classes. \n", num_classes);
+}
